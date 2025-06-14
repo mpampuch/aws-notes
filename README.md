@@ -25,6 +25,52 @@ Some tips / things of notes for myself while I'm learning AWS
 
 ### How to Save Access Keys Locally?
 
+There are 2 ways to set access keys locally.
+
+1. You can put them in a credentials file
+2. You can create an environment variable
+
+#### Creating a Credentials File
+
+Access keys are stored in `~/.aws/credentials` and follow a INI file format (similar to a TOML file format)
+
+```ini
+[default]
+aws_access_key_id = AKIAEXAMPLEDEFAULT
+aws_secret_access_key = abc123exampleSecretKeyDefault
+
+[user123]
+aws_access_key_id = AKIAEXAMPLEUSER123
+aws_secret_access_key = abc123exampleSecretKeyUser123
+regin = ca-central-1
+```
+
+`default` will be the access key used when no profile is specified.
+
+You can store multiple access keys by giving the profile names (e.g. `user123`)
+
+You can use the `aws configure` CLI command to populate the credentials file. This will automatically create the INI file.
+
+```bash
+$ aws configure
+AWS Access Key ID [None]: AKIAEXAMPLE123456
+AWS Secret Access Key [None]: abc123exampleSecretKey
+Default region name [None]: us-east-1
+Default output format [None]: json
+```
+
+#### Creating an Environment Variable
+
+You can also set your credentials using environmental variables 
+
+```bash
+export AWS_ACCESS_KEY_ID=AKIAEXAMPLE123456
+export AWS_SECRET_ACCESS_KEY=abc123exampleSecretKey
+export AWS_DEFAULT_REGION=us-east-1
+```
+
+The AWS SDK and CLI will automatically read from these environmental variables. **Environmental variables are a good way to set credentials especially on cloud developer environments where you can't set a credentials file.**
+
 ## Configuration Files
 
 ## AWS CLI Configure Commands
