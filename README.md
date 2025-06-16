@@ -71,12 +71,6 @@ export AWS_DEFAULT_REGION=us-east-1
 
 The AWS SDK and CLI will automatically read from these environmental variables. **Environmental variables are a good way to set credentials especially on cloud developer environments where you can't set a credentials file.**
 
-## Configuration Files
-
-## AWS CLI Configure Commands
-
-## AWS CLI Environment Variables
-
 ## AWS CLI Autoprompt
 
 ## AWS S3
