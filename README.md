@@ -260,11 +260,11 @@ export AWS_DEFAULT_REGION=us-east-1
 
 The AWS SDK and CLI will automatically read from these environmental variables. **Environmental variables are a good way to set credentials especially on cloud developer environments where you can't set a credentials file.**
 
-## AWS GUI, CLI, and SDKs
+## AWS Click Ops, CLI, and SDKs
 
 AWS provides multiple ways to interact with its services, each suited for different use cases and skill levels.
 
-### AWS Management Console (GUI)
+### AWS Management Console (Click Ops)
 
 The **AWS Management Console** is a web-based graphical user interface for managing AWS resources.
 
