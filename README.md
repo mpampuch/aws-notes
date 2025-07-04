@@ -483,6 +483,148 @@ s3.listBuckets((err, data) => {
 | Scalability    | Low     | High    | High      |
 | Error handling | Good    | Basic   | Excellent |
 
+## AWS CLI Autoprompt
+
+AWS CLI **Auto-prompt** is an interactive feature that helps you build commands step-by-step.
+
+### How It Works
+
+- Type `aws` followed by a service name and press Tab
+- CLI will prompt you for required parameters
+- Provides suggestions and validates input
+- Helps prevent syntax errors
+
+### Enabling Auto-prompt
+
+```bash
+# Enable for current session
+export AWS_CLI_AUTO_PROMPT=on-partial
+
+# Enable for specific command
+aws s3 ls --cli-auto-prompt on-partial
+```
+
+### Auto-prompt Modes
+
+- **off**: Disabled (default)
+- **on**: Full auto-prompt
+- **on-partial**: Auto-prompt only when you press Tab
+
+### Benefits
+
+- Faster command building
+- Learn AWS CLI syntax interactively
+- Reduce typos and errors
+- Discover available options and parameters
+
+## AWS Free Tier
+
+The **AWS Free Tier** provides free access to many AWS services for 12 months after account creation, plus some services that are always free.
+
+### What's Included in Free Tier
+
+#### Always Free Services (No Time Limit)
+
+- **AWS Lambda**: 1M requests per month, 400,000 GB-seconds
+- **AWS DynamoDB**: 25GB storage, 25 WCU/RCU
+- **AWS CloudWatch**: 10 custom metrics, 1M API requests
+- **AWS SNS**: 1M publishes, 1M HTTP/HTTPS deliveries
+- **AWS SQS**: 1M requests per month
+- **AWS CodeBuild**: 100 build minutes per month
+- **AWS CodeCommit**: 5 active users, 50GB storage
+- **AWS CloudFormation**: 1,000 handler operations per month
+
+#### 12-Month Free Tier Services
+
+- **EC2**: 750 hours/month of t2.micro or t3.micro instances
+- **S3**: 5GB storage, 20,000 GET requests, 2,000 PUT requests
+- **RDS**: 750 hours/month of db.t2.micro instances
+- **ElastiCache**: 750 hours/month of cache.t2.micro nodes
+- **CloudFront**: 1TB data transfer out
+- **API Gateway**: 1M API calls per month
+- **Elastic Load Balancer**: 750 hours/month
+- **EBS**: 30GB storage, 2M I/O operations
+- **SES**: 62,000 outbound messages per month
+
+### Important Free Tier Considerations
+
+#### Usage Limits
+
+- **Time-based**: Most services have monthly usage limits
+- **Regional**: Free tier applies per region
+- **Account-based**: One free tier per AWS account
+- **Automatic billing**: You'll be charged if you exceed limits
+
+#### Common Gotchas
+
+- **Data Transfer**: Outbound data transfer beyond free tier is charged
+- **Storage**: S3 storage beyond 5GB is charged
+- **Snapshots**: EBS snapshots beyond free tier are charged
+- **Load Balancers**: Running 24/7 can exceed free tier quickly
+- **RDS**: Multi-AZ deployments are not free tier eligible
+
+#### Best Practices for Free Tier
+
+1. **Set up billing alerts**
+
+   ```bash
+   # Create billing alarm via CLI
+   aws cloudwatch put-metric-alarm \
+     --alarm-name "FreeTierAlert" \
+     --alarm-description "Alert when approaching free tier limits" \
+     --metric-name EstimatedCharges \
+     --namespace AWS/Billing \
+     --statistic Maximum \
+     --period 86400 \
+     --threshold 5 \
+     --comparison-operator GreaterThanThreshold
+   ```
+
+2. **Monitor usage regularly**
+
+   - Check AWS Cost Explorer
+   - Review monthly billing statements
+   - Use AWS Budgets for spending limits
+
+3. **Clean up unused resources**
+
+   - Terminate EC2 instances when not needed
+   - Delete unused EBS volumes
+   - Remove old S3 objects
+   - Stop RDS instances during development
+
+4. **Use appropriate instance types**
+   - Stick to t2.micro for EC2
+   - Use db.t2.micro for RDS
+   - Choose free tier eligible services
+
+### Free Tier Calculator
+
+Use the [AWS Pricing Calculator](https://calculator.aws/) to estimate costs beyond free tier limits.
+
+### Free Tier Expiration
+
+- **12 months** from account creation date
+- **No automatic notification** when free tier expires
+- **Immediate billing** starts when free tier ends
+- **Always free services** continue indefinitely
+
+### Tips for Staying Within Free Tier
+
+1. **Start small**: Begin with minimal resources
+2. **Use spot instances**: For non-critical workloads
+3. **Optimize storage**: Use appropriate storage classes
+4. **Monitor closely**: Set up CloudWatch alarms
+5. **Document usage**: Track what you're using
+6. **Plan ahead**: Know when free tier expires
+
+### Other AWS resources
+
+- **AWS Educate**: For students (requires .edu email)
+- **AWS Activate**: For startups
+- **AWS Partner Network**: For partners
+- **Regional pricing**: Some regions have lower costs
+
 ## AWS S3
 
 **Simple Storage Service (S3)** is AWS's object storage service.
@@ -658,145 +800,3 @@ The **Root Device Type** determines how the root volume is stored and managed.
   - High-performance requirements
   - Cost-sensitive applications
   - When data persistence isn't required
-
-## AWS CLI Autoprompt
-
-AWS CLI **Auto-prompt** is an interactive feature that helps you build commands step-by-step.
-
-### How It Works
-
-- Type `aws` followed by a service name and press Tab
-- CLI will prompt you for required parameters
-- Provides suggestions and validates input
-- Helps prevent syntax errors
-
-### Enabling Auto-prompt
-
-```bash
-# Enable for current session
-export AWS_CLI_AUTO_PROMPT=on-partial
-
-# Enable for specific command
-aws s3 ls --cli-auto-prompt on-partial
-```
-
-### Auto-prompt Modes
-
-- **off**: Disabled (default)
-- **on**: Full auto-prompt
-- **on-partial**: Auto-prompt only when you press Tab
-
-### Benefits
-
-- Faster command building
-- Learn AWS CLI syntax interactively
-- Reduce typos and errors
-- Discover available options and parameters
-
-## AWS Free Tier
-
-The **AWS Free Tier** provides free access to many AWS services for 12 months after account creation, plus some services that are always free.
-
-### What's Included in Free Tier
-
-#### Always Free Services (No Time Limit)
-
-- **AWS Lambda**: 1M requests per month, 400,000 GB-seconds
-- **AWS DynamoDB**: 25GB storage, 25 WCU/RCU
-- **AWS CloudWatch**: 10 custom metrics, 1M API requests
-- **AWS SNS**: 1M publishes, 1M HTTP/HTTPS deliveries
-- **AWS SQS**: 1M requests per month
-- **AWS CodeBuild**: 100 build minutes per month
-- **AWS CodeCommit**: 5 active users, 50GB storage
-- **AWS CloudFormation**: 1,000 handler operations per month
-
-#### 12-Month Free Tier Services
-
-- **EC2**: 750 hours/month of t2.micro or t3.micro instances
-- **S3**: 5GB storage, 20,000 GET requests, 2,000 PUT requests
-- **RDS**: 750 hours/month of db.t2.micro instances
-- **ElastiCache**: 750 hours/month of cache.t2.micro nodes
-- **CloudFront**: 1TB data transfer out
-- **API Gateway**: 1M API calls per month
-- **Elastic Load Balancer**: 750 hours/month
-- **EBS**: 30GB storage, 2M I/O operations
-- **SES**: 62,000 outbound messages per month
-
-### Important Free Tier Considerations
-
-#### Usage Limits
-
-- **Time-based**: Most services have monthly usage limits
-- **Regional**: Free tier applies per region
-- **Account-based**: One free tier per AWS account
-- **Automatic billing**: You'll be charged if you exceed limits
-
-#### Common Gotchas
-
-- **Data Transfer**: Outbound data transfer beyond free tier is charged
-- **Storage**: S3 storage beyond 5GB is charged
-- **Snapshots**: EBS snapshots beyond free tier are charged
-- **Load Balancers**: Running 24/7 can exceed free tier quickly
-- **RDS**: Multi-AZ deployments are not free tier eligible
-
-#### Best Practices for Free Tier
-
-1. **Set up billing alerts**
-
-   ```bash
-   # Create billing alarm via CLI
-   aws cloudwatch put-metric-alarm \
-     --alarm-name "FreeTierAlert" \
-     --alarm-description "Alert when approaching free tier limits" \
-     --metric-name EstimatedCharges \
-     --namespace AWS/Billing \
-     --statistic Maximum \
-     --period 86400 \
-     --threshold 5 \
-     --comparison-operator GreaterThanThreshold
-   ```
-
-2. **Monitor usage regularly**
-
-   - Check AWS Cost Explorer
-   - Review monthly billing statements
-   - Use AWS Budgets for spending limits
-
-3. **Clean up unused resources**
-
-   - Terminate EC2 instances when not needed
-   - Delete unused EBS volumes
-   - Remove old S3 objects
-   - Stop RDS instances during development
-
-4. **Use appropriate instance types**
-   - Stick to t2.micro for EC2
-   - Use db.t2.micro for RDS
-   - Choose free tier eligible services
-
-### Free Tier Calculator
-
-Use the [AWS Pricing Calculator](https://calculator.aws/) to estimate costs beyond free tier limits.
-
-### Free Tier Expiration
-
-- **12 months** from account creation date
-- **No automatic notification** when free tier expires
-- **Immediate billing** starts when free tier ends
-- **Always free services** continue indefinitely
-
-### Tips for Staying Within Free Tier
-
-1. **Start small**: Begin with minimal resources
-2. **Use spot instances**: For non-critical workloads
-3. **Optimize storage**: Use appropriate storage classes
-4. **Monitor closely**: Set up CloudWatch alarms
-5. **Document usage**: Track what you're using
-6. **Plan ahead**: Know when free tier expires
-
-### Other AWS resources
-
-- **AWS Educate**: For students (requires .edu email)
-- **AWS Activate**: For startups
-- **AWS Partner Network**: For partners
-- **Regional pricing**: Some regions have lower costs
