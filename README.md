@@ -268,6 +268,11 @@ AWS provides multiple ways to interact with its services, each suited for differ
 
 The **AWS Management Console** is a web-based graphical user interface for managing AWS resources.
 
+It can be found here: [https://console.aws.amazon.com](https://console.aws.amazon.com)
+
+> [!NOTE]
+> For some reason, sometimes I have issues accessing this website on Google Chrome. On Safari I have no issues so I use Safari as of right now.
+
 #### Pros
 
 - **User-friendly**: No coding required
