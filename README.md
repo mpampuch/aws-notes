@@ -942,8 +942,6 @@ In addition to AWS Free Tier, there are free services on AWS that are free forev
 
 ### AWS Pricing Calculator
 
-![AWS Pricing Calculator](imgs/aws-pricing-calculator.png)
-
 - **What is it?**
   - A free, web-based tool (https://calculator.aws) to estimate the cost of AWS services before you deploy them.
   - No AWS account required to use.
