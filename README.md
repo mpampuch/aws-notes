@@ -932,6 +932,47 @@ Use the [AWS Pricing Calculator](https://calculator.aws/) to estimate costs beyo
 - **AWS Partner Network**: For partners
 - **Regional pricing**: Some regions have lower costs
 
+## AWS Networking: Security Groups vs NACLs
+
+### Security Groups
+
+- Act as virtual firewalls for EC2 instances to control inbound and outbound traffic.
+- **Instance-level**: Applied directly to EC2 instances (and some other resources).
+- **Stateful**: If you allow an incoming request, the response is automatically allowed.
+- **Rules**: Only allow rules (no explicit deny); you specify allowed protocols, ports, and source/destination IPs or CIDR blocks.
+- **Default behavior**: All inbound traffic is denied, all outbound traffic is allowed (can be modified).
+- **Evaluation**: All rules are evaluated together; if any rule allows traffic, it is allowed.
+
+### Network ACLs (NACLs)
+
+- Act as firewalls for subnets within a VPC, controlling traffic in and out of one or more subnets.
+- **Subnet-level**: Applied to all resources within a subnet.
+- **Stateless**: Responses to allowed inbound traffic must be explicitly allowed by outbound rules (and vice versa).
+- **Rules**: Support both allow and deny rules; rules are evaluated in order (lowest number first).
+- **Default behavior**: All inbound and outbound traffic is allowed (can be modified).
+- **Evaluation**: Rules are processed in order; the first matching rule is applied.
+
+### Key Differences
+
+| Feature            | Security Group             | NACL (Network ACL)       |
+| ------------------ | -------------------------- | ------------------------ |
+| Level              | Instance (ENI)             | Subnet                   |
+| Stateful/Stateless | Stateful                   | Stateless                |
+| Allow/Deny         | Allow only                 | Allow and Deny           |
+| Evaluation         | All rules evaluated        | Rules evaluated in order |
+| Default Inbound    | Deny all                   | Allow all                |
+| Default Outbound   | Allow all                  | Allow all                |
+| Applies to         | EC2, ENI, ELB, RDS, Lambda | All resources in subnet  |
+
+### When to Use
+
+- **Security Groups**: Use for most access control needs at the instance/resource level.
+- **NACLs**: Use for additional subnet-level control, especially for blocking specific IPs or ranges, or for compliance.
+
+## AWS Storage Services
+
+![Types of Storage Services](types-of-storage-services.png)
+
 ## AWS S3
 
 **Simple Storage Service (S3)** is AWS's object storage service.
@@ -1005,6 +1046,36 @@ Use the [AWS Pricing Calculator](https://calculator.aws/) to estimate costs beyo
 - **Reserved Instances**: 1-3 year commitment, significant discount
 - **Spot Instances**: Use unused capacity, up to 90% discount
 - **Savings Plans**: Flexible commitment for consistent usage
+
+### EC2 Tenancy Levels
+
+![EC2 Tenancy Levels](imgs/ec2-tenancy-levels.png)
+
+AWS EC2 offers different tenancy options that determine how your instances are run on physical hardware:
+
+- **Shared Tenancy (default):**
+
+  - Your instance runs on physical servers that may be shared with other AWS customers.
+  - Most cost-effective and flexible option.
+  - Default for most EC2 instance launches.
+
+- **Dedicated Instance:**
+
+  - Your instance runs on hardware that is dedicated to your AWS account, but may share the hardware with other instances from your account.
+  - Provides physical isolation at the account level, but not at the instance level.
+  - Higher cost than shared tenancy.
+
+- **Dedicated Host:**
+  - You get an entire physical server dedicated to your use.
+  - Allows you to place and control your instances on a specific, physical server.
+  - Useful for compliance, licensing, or regulatory requirements.
+  - Most expensive option, but provides the highest level of isolation and control.
+
+**When to use each:**
+
+- Use **shared tenancy** for most workloads.
+- Use **dedicated instances** for additional isolation without full host control.
+- Use **dedicated hosts** for compliance, licensing, or when you need to use your own server-bound software licenses.
 
 ## AWS EBS
 
