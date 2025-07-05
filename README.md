@@ -971,7 +971,7 @@ Use the [AWS Pricing Calculator](https://calculator.aws/) to estimate costs beyo
 
 ## AWS Storage Services
 
-![Types of Storage Services](types-of-storage-services.png)
+![Types of Storage Services](imgs/types-of-storage-services.png)
 
 ## AWS S3
 
@@ -1049,7 +1049,7 @@ Use the [AWS Pricing Calculator](https://calculator.aws/) to estimate costs beyo
 
 ### EC2 Tenancy Levels
 
-![EC2 Tenancy Levels](imgs/ec2-tenancy-levels.png)
+![EC2 Tenancy Levels](imgs/EC2-levels-of-tenancy.png)
 
 AWS EC2 offers different tenancy options that determine how your instances are run on physical hardware:
 
