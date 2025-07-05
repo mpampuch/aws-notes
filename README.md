@@ -260,6 +260,61 @@ Global AWS Infrastructure
 
 For more details, see the official AWS documentation on [Best Practices for Managing AWS Access Keys](https://docs.aws.amazon.com/general/latest/gr/aws-access-keys-best-practices.html) and [IAM Best Practices](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html).
 
+## AWS Account ID
+
+- **Every AWS account has a unique 12-digit Account ID.**
+- You can find your Account ID by clicking on "My Account" in the AWS Management Console's global navigation bar.
+- **Format:** 12 digits (e.g., 123456789012, 121212121212, 498241098510).
+
+### Uses of the AWS Account ID
+
+- Required when logging in as an IAM (non-root) user.
+- Used for cross-account roles and permissions.
+- Needed for AWS support cases.
+
+### Security Note
+
+- It is generally good practice to keep your Account ID private.
+- The Account ID is one of several components that could be used by a malicious actor to target your account.
+
+## Amazon Resource Names (ARNs)
+
+- **ARNs (Amazon Resource Names)** uniquely identify AWS resources.
+- ARNs are required to specify a resource unambiguously across all of AWS.
+
+### ARN Format Variations
+
+- The general format is:
+  - `arn:partition:service:region:account-id:resource-id`
+  - `arn:partition:service:region:account-id:resource-type/resource-id`
+  - `arn:partition:service:region:account-id:resource-type:resource-id`
+- **Partition**:
+  - `aws` (standard regions)
+  - `aws-cn` (China regions)
+  - `aws-us-gov` (GovCloud regions)
+- **Service**: Identifies the AWS service (e.g., `ec2`, `s3`, `iam`)
+- **Region**: The AWS region (e.g., `us-east-1`, `ca-central-1`)
+- **Account ID**: The 12-digit AWS account number
+- **Resource ID**: The specific resource (could be a name, number, or path, e.g., `user/Bob`, `instance/i-1234567890abcdef0`)
+
+### Example ARN
+
+- S3 bucket: `arn:aws:s3:::my-bucket`
+
+### Paths in ARNs
+
+- Resource ARNs can include a path.
+- Paths can include a wildcard character (`*`).
+- **Examples:**
+  - IAM Policy ARN Path:  
+    `arn:aws:iam::123456789012:user/Development/product_1234/*`
+  - S3 ARN Path:  
+    `arn:aws:s3:::my_corporate_bucket/Development/*`
+
+### Console Tip
+
+- In the AWS Management Console, you can often copy the ARN for a resource directly to your clipboard.
+
 ## IAM Users
 
 **Identity and Access Management (IAM) users** are entities that represent a person or application that interacts with AWS resources. Unlike the root user, IAM users are created within your AWS account and have specific permissions assigned to them.
@@ -453,7 +508,66 @@ export AWS_DEFAULT_REGION=us-east-1
 
 The AWS SDK and CLI will automatically read from these environmental variables. **Environmental variables are a good way to set credentials especially on cloud developer environments where you can't set a credentials file.**
 
-## AWS Click Ops, CLI, and SDKs
+## AWS Application Programming Interface (API)
+
+### What is an API?
+
+- An **API (Application Programming Interface)** is software that allows two applications or services to communicate with each other.
+- The most common type of API is via HTTP/S requests.
+
+### AWS API Basics
+
+- AWS provides HTTP APIs for its services.
+- You can interact with AWS APIs by sending HTTPS requests, often using tools like **Postman** or programmatically via SDKs/CLI.
+
+### How Users Interact with AWS APIs
+
+- **Rarely do users directly send HTTP requests to the AWS API.**
+- It's much easier to interact with the API via a variety of developer tools:
+  - **AWS Management Console**: A WYSIWYG web interface for interacting with AWS services.
+  - **AWS CLI**: Command Line Interface for interacting with AWS via terminal/shell.
+  - **AWS SDK**: Software Development Kits for interacting with AWS using your favorite programming language.
+  - **Direct HTTP Request**: You can interact directly with the AWS API, but this is uncommon for most users.
+
+### Service Endpoints
+
+- **Each AWS service has its own Service Endpoint** (e.g., `monitoring.us-east-1.amazonaws.com` for CloudWatch in US-EAST-1).
+- You send your API requests to these endpoints.
+
+### Example API Request
+
+```
+GET / HTTP/1.1
+host: monitoring.us-east-1.amazonaws.com
+x-amz-target: GraniteServiceVersion20100801.GetMetricData
+x-amz-date: 20180112T092034Z
+Authorization: AWS4-HMAC-SHA256 Credential=...
+Content-Type: application/json
+Accept: application/json
+Content-Encoding: amz-1.0
+Content-Length: 45
+Connection: keep-alive
+```
+
+### Authorization & Signed Requests
+
+- To authorize your API requests, you must generate a **signed request** (using your AWS credentials, typically with AWS Signature Version 4).
+- Sometimes, you make a separate request with your credentials to get a token.
+
+### Actions and Payloads
+
+- You must specify an **ACTION** (e.g., `GetMetricData`) and provide any required parameters in the payload.
+
+### Key Points
+
+- **Service Endpoint**: Each AWS service/region has a unique endpoint.
+- **Signed Requests**: Required for authorization; use your AWS credentials.
+- **Action**: Specify the operation you want to perform.
+- **Tools**: You can use Postman, AWS Console, CLI, or SDKs to interact with AWS APIs for testing and learning.
+
+However, **rarely do users directly send HTTP requests directly to the AWS API. Its much easier to interact with the API via a variety of Developer Tools**.
+
+## AWS Developer Tools (Click Ops, CLI, and SDKs)
 
 AWS provides multiple ways to interact with its services, each suited for different use cases and skill levels.
 
