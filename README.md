@@ -925,12 +925,67 @@ Use the [AWS Pricing Calculator](https://calculator.aws/) to estimate costs beyo
 5. **Document usage**: Track what you're using
 6. **Plan ahead**: Know when free tier expires
 
+### AWS Free Services
+
+In addition to AWS Free Tier, there are free services on AWS that are free forever
+
+![AWS Free Services](imgs/AWS-free-services.png)
+
 ### Other AWS resources
 
 - **AWS Educate**: For students (requires .edu email)
 - **AWS Activate**: For startups
 - **AWS Partner Network**: For partners
 - **Regional pricing**: Some regions have lower costs
+
+## AWS Pricing Calculator & Cost Explorer
+
+### AWS Pricing Calculator
+
+![AWS Pricing Calculator](imgs/aws-pricing-calculator.png)
+
+- **What is it?**
+  - A free, web-based tool (https://calculator.aws) to estimate the cost of AWS services before you deploy them.
+  - No AWS account required to use.
+- **Key Features:**
+  - Supports 100+ AWS services for cost estimation
+  - Configure resources, usage, and pricing models (on-demand, reserved, etc.)
+  - View monthly, upfront, and 12-month cost projections
+  - Export estimates to CSV for sharing or analysis
+  - Useful for planning, budgeting, and TCO (Total Cost of Ownership) comparisons
+- **Use Cases:**
+  - Estimate costs for new workloads or migrations
+  - Compare AWS costs to on-premises or other cloud providers
+  - Share cost estimates with stakeholders
+
+### AWS Cost Explorer
+
+- **What is it?**
+  - A tool in the AWS Management Console for analyzing your actual AWS spending and usage over time.
+  - Requires an AWS account with billing permissions.
+- **Key Features:**
+  - Visualize costs and usage with interactive graphs and filtering
+  - Break down costs by service, account, tag, region, or usage type
+  - Forecast future costs based on historical usage
+  - Identify cost trends, spikes, and savings opportunities
+  - Set up cost and usage reports, and create custom views
+- **Use Cases:**
+  - Track and manage AWS spending
+  - Identify cost optimization opportunities
+  - Allocate costs to teams, projects, or business units
+  - Monitor budgets and avoid unexpected charges
+
+### Key Differences
+
+| Feature  | AWS Pricing Calculator       | AWS Cost Explorer            |
+| -------- | ---------------------------- | ---------------------------- |
+| Purpose  | Estimate future costs        | Analyze actual costs         |
+| Access   | Public web tool              | AWS Console (account needed) |
+| Data     | Hypothetical (planned usage) | Real usage and billing data  |
+| Export   | CSV, shareable links         | CSV, reports                 |
+| Use Case | Planning, budgeting          | Monitoring, optimization     |
+
+**Tip:** Use the Pricing Calculator before deploying resources, and Cost Explorer to monitor and optimize after deployment.
 
 ## AWS Networking: Security Groups vs NACLs
 
