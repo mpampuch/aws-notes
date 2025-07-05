@@ -1451,6 +1451,101 @@ The **Root Device Type** determines how the root volume is stored and managed.
   - Cost-sensitive applications
   - When data persistence isn't required
 
+## Logging Services
+
+### CloudTrail
+
+- **AWS CloudTrail** is a service that enables governance, compliance, operational auditing, and risk auditing of your AWS account.
+- **Purpose:** Monitors and records account activity across your AWS infrastructure, giving you visibility into user and resource actions.
+
+### What Does CloudTrail Log?
+
+- **All API calls** made via the AWS Management Console, AWS SDKs, CLI, and other AWS services.
+- **Events include:**
+  - Who made the request (user, role, or service)
+  - When the request was made (timestamp)
+  - What actions were performed (event name, e.g., CreateUser, DeleteBucket)
+  - Which resources were affected (resource ARNs, IDs)
+  - Source IP address and user agent
+  - Request and response parameters
+
+### Example CloudTrail Event (JSON)
+
+```json
+{
+  "Records": [
+    {
+      "eventVersion": "1.0",
+      "userIdentity": {
+        "type": "IAMUser",
+        "principalId": "EX_PRINCIPAL_ID",
+        "arn": "arn:aws:iam::123456789012:user/Worf",
+        "accountId": "123456789012",
+        "accessKeyId": "EXAMPLE_KEY_ID",
+        "userName": "Worf"
+      },
+      "eventTime": "2014-03-24T21:11:59Z",
+      "eventSource": "iam.amazonaws.com",
+      "eventName": "CreateUser",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "127.0.0.1",
+      "userAgent": "aws-cli/1.3.2 Python/2.7.5 Windows/10",
+      "requestParameters": { "userName": "LaForge" },
+      "responseElements": {
+        "user": {
+          "createDate": "Mar 24, 2014 9:11:59 PM",
+          "userName": "LaForge",
+          "arn": "arn:aws:iam::123456789012:user/LaForge",
+          "path": "/",
+          "userId": "EXAMPLEUSERID"
+        }
+      }
+    }
+  ]
+}
+```
+
+### CloudTrail Event History vs. Trails
+
+- **Event History:**
+  - CloudTrail logs are enabled by default for all AWS accounts.
+  - The Event History in the AWS Console shows the last **90 days** of management events (read/write API activity).
+  - Useful for quick lookups and recent activity.
+- **Trails:**
+  - To retain logs for more than 90 days, you must create a **Trail**.
+  - Trails deliver log files to an S3 bucket for long-term storage and analysis.
+  - Trails can be created for a single region or all regions (recommended for compliance).
+  - Trails can also send events to CloudWatch Logs for real-time monitoring and alerting.
+
+### Analyzing CloudTrail Logs
+
+- **No GUI for Trails:**
+  - Trails output raw JSON logs to S3, not a GUI.
+- **Analysis Tools:**
+  - Use **Amazon Athena** to run SQL queries on CloudTrail logs stored in S3.
+  - Integrate with CloudWatch Logs for real-time analysis and alerting.
+  - Export logs to SIEM or third-party tools for advanced security analytics.
+
+### Use Cases
+
+- **Security & Compliance:**
+  - Detect unauthorized or unusual activity (e.g., root account usage, policy changes).
+  - Meet regulatory requirements for audit trails.
+- **Operational Auditing:**
+  - Troubleshoot changes and resource creation/deletion.
+  - Answer questions like "Who deleted this resource?" or "Who changed this security group?"
+- **Automation:**
+  - Trigger automated responses to specific events (e.g., Lambda function on S3 bucket deletion).
+
+### Best Practices
+
+- Always enable CloudTrail in all regions.
+- Create a multi-region trail for comprehensive coverage.
+- Store logs in a secure, versioned S3 bucket.
+- Enable log file validation for integrity.
+- Integrate with CloudWatch for real-time alerts.
+- Regularly review and analyze logs for suspicious activity.
+
 ## AWS AMI
 
 **Amazon Machine Image (AMI)** is a template containing software configuration for an instance.
@@ -1481,3 +1576,314 @@ The **Root Device Type** determines how the root volume is stored and managed.
 - Use descriptive names and tags
 - Test AMIs before sharing or using in production
 - Consider using AWS Systems Manager for automated AMI management
+
+## VMs vs Containers
+
+![VMs vs Containers](imgs/vms-vs-containers.png)
+
+### Key Differences
+
+- **VMs (Virtual Machines):**
+  - Do not make the best use of space; can result in wasted resources.
+  - Apps are not isolated, which can cause configuration conflicts, security problems, or resource hogging.
+  - Each VM includes its own OS, libraries, and binaries, running on a hypervisor.
+- **Containers:**
+  - Allow you to run multiple apps, each virtually isolated from the others.
+  - Launch new containers and configure OS dependencies per container.
+  - More efficient use of resources; available space can be used for more containers.
+  - Containers share the host OS and run on a container engine (e.g., Docker Daemon), reducing overhead.
+
+![VMs vs Containers](imgs/vms-vs-containers.png)
+
+## What are Microservices?
+
+![Microservices vs Monolithic](imgs/microservices-vs-monolithic.png)
+
+### Monolithic Architecture
+
+- **One app responsible for everything**; all functionality is tightly coupled.
+- All services (load balancing, caching, database, frontend, backend, etc.) are part of a single codebase and deployment.
+- Changes in one part can affect the whole system.
+- Harder to scale, update, and maintain as the application grows.
+
+### Microservices Architecture
+
+- **Multiple apps, each responsible for one thing**; functionality is isolated and stateless.
+- Each service (load balancing, caching, database, queueing, etc.) is its own independent component.
+- Services communicate over APIs and can be deployed, updated, and scaled independently.
+- Easier to maintain, scale, and develop by separate teams.
+
+### Key Differences
+
+| Monolithic Architecture             | Microservices Architecture                |
+| ----------------------------------- | ----------------------------------------- |
+| Single, tightly-coupled application | Multiple, loosely-coupled services        |
+| All functionality in one codebase   | Each service has its own codebase         |
+| Harder to scale and update          | Easier to scale and update independently  |
+| One deployment pipeline             | Separate deployment pipelines per service |
+| Shared resources and dependencies   | Isolated resources and dependencies       |
+
+## Kubernetes
+
+- **Kubernetes** is an open-source container orchestration platform for automating deployment, scaling, and management of containerized applications.
+- Originally developed by Google, now maintained by the Cloud Native Computing Foundation (CNCF).
+- **Key features:**
+  - Automated container scheduling and scaling
+  - Self-healing (auto-restart, reschedule, replace containers)
+  - Service discovery and load balancing
+  - Rolling updates and rollbacks
+  - Declarative configuration (YAML/JSON)
+- **AWS Integration:**
+  - AWS offers managed Kubernetes via **Amazon EKS (Elastic Kubernetes Service)**
+  - Can run Kubernetes clusters on EC2 or on-premises (hybrid)
+- **Why use Kubernetes?**
+  - Simplifies running microservices and containerized workloads at scale
+  - Enables portability across cloud and on-prem environments
+  - Industry standard for container orchestration
+
+### Example: Simple Kubernetes Deployment YAML
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.21
+          ports:
+            - containerPort: 80
+```
+
+This manifest deploys two NGINX containers managed by Kubernetes.
+
+## Terraform
+
+- **Terraform** is an open-source Infrastructure as Code (IaC) tool developed by HashiCorp.
+- Allows you to define, provision, and manage cloud infrastructure using declarative configuration files (HCL - HashiCorp Configuration Language).
+- **Key features:**
+  - Supports AWS, Azure, GCP, and many other providers
+  - Enables version control and repeatability for infrastructure
+  - Manages dependencies and resource relationships
+  - Plan and preview changes before applying
+  - State management for tracking deployed resources
+- **AWS Integration:**
+  - Use Terraform to automate creation and management of AWS resources (EC2, S3, VPC, IAM, etc.)
+  - Works well for multi-cloud and hybrid-cloud deployments
+- **Why use Terraform?**
+  - Infrastructure is reproducible, auditable, and shareable
+  - Reduces manual errors and increases automation
+  - Essential for modern DevOps and cloud engineering workflows
+
+### Example: Simple Terraform AWS EC2 Instance
+
+```hcl
+provider "aws" {
+  region = "us-east-1"
+}
+
+resource "aws_instance" "example" {
+  ami           = "ami-0c55b159cbfafe1f0" # Amazon Linux 2 AMI (example)
+  instance_type = "t2.micro"
+
+  tags = {
+    Name = "TerraformExample"
+  }
+}
+```
+
+This configuration will provision a t2.micro EC2 instance in AWS using Terraform.
+
+## AWS CloudWatch
+
+Amazon CloudWatch is AWS's native monitoring and observability service. It collects, visualizes, and acts on metrics, logs, and events from AWS resources, applications, and on-premises servers, enabling you to monitor performance, troubleshoot issues, and automate responses.
+
+### Core CloudWatch Components
+
+- **Metrics**: Numeric data points representing resource or application performance over time.
+- **Alarms**: Automated rules that watch metrics and trigger actions when thresholds are breached.
+- **Logs**: Aggregated log data from AWS services, EC2, Lambda, and custom sources.
+- **Events/EventBridge**: Event-driven rules and automation for AWS and SaaS events.
+- **Dashboards**: Customizable visualizations of metrics and logs.
+- **Insights**: Advanced analytics for logs (CloudWatch Logs Insights).
+
+---
+
+### CloudWatch Metrics
+
+- **Definition**: A time-ordered set of data points (values) for a resource or application variable.
+- **Predefined Metrics**: Provided automatically for AWS services (EC2, S3, Lambda, RDS, etc.).
+- **Custom Metrics**: You can publish your own metrics (e.g., app latency, business KPIs).
+- **Namespaces**: Logical containers for metrics (e.g., `AWS/EC2`, `AWS/Lambda`, `Custom/MyApp`).
+- **Dimensions**: Name/value pairs for filtering (e.g., InstanceId, FunctionName).
+- **Granularity**: Default is 1-minute; some services support 1-second (high-resolution metrics).
+- **Retention**: 15 months (with decreasing granularity over time).
+- **Metric Math**: Perform calculations across multiple metrics (e.g., sum, average, rate, anomaly detection).
+
+**Common EC2 Metrics:**
+
+- CPUUtilization, DiskReadOps, DiskWriteOps, NetworkIn, NetworkOut, StatusCheckFailed, etc.
+
+**Custom Metrics Example (CLI):**
+
+```bash
+aws cloudwatch put-metric-data --namespace "Custom/App" --metric-name PageLoadTime --value 1.23
+```
+
+---
+
+### CloudWatch Alarms
+
+![CloudWatch Alarms Anatomy](imgs/cloudwatch-anatomy-of-an-alarm.png)
+
+- **Purpose**: Monitor a metric and perform actions when it breaches a defined threshold.
+- **States**: `OK`, `ALARM`, `INSUFFICIENT_DATA`
+  - `OK`: The metric or expression is **within** the defined threshold
+  - `ALARM`: The metric or expression is **outside** of the defined threshold
+  - `INSUFFICIENT_DATA`: Either the alarm has **just started**, the metric is **not available**, or **not enough data** is available
+- **Types**:
+  - **Metric Alarm**: Single metric or metric math expression
+  - **Composite Alarm**: Combines multiple alarms (AND/OR logic)
+  - **Anomaly Detection**: Uses ML to detect outliers
+- **Actions**: Send SNS notification, trigger Lambda, Auto Scaling, EC2 actions, etc.
+- **Evaluation Periods**: Number of periods to evaluate before changing state
+- **Datapoints to Alarm**: How many periods must breach threshold to trigger alarm
+- **Best Practices**:
+  - Use alarms for billing, system health, and custom app metrics
+  - Combine with automation (e.g., auto-recover EC2, scale out/in)
+
+**Example: Billing Alarm (CLI):**
+
+```bash
+aws cloudwatch put-metric-alarm \
+  --alarm-name "BillingAlarm" \
+  --metric-name EstimatedCharges \
+  --namespace AWS/Billing \
+  --statistic Maximum \
+  --period 86400 \
+  --threshold 10 \
+  --comparison-operator GreaterThanThreshold \
+  --evaluation-periods 1 \
+  --alarm-actions arn:aws:sns:us-east-1:123456789012:NotifyMe
+```
+
+---
+
+### CloudWatch Logs
+
+- **Log Groups**: Containers for log streams (e.g., `/aws/lambda/my-function`)
+- **Log Streams**: Sequences of log events from a single source (e.g., EC2 instance, Lambda invocation)
+- **Log Events**: Individual log entries (timestamped)
+- **Ingestion Sources**: EC2 (via agent), Lambda, VPC Flow Logs, API Gateway, ECS/EKS, custom apps
+- **Retention**: Configurable (default is never expire)
+- **Subscription Filters**: Stream logs to Lambda, Kinesis, or Elasticsearch for real-time processing
+- **Export**: Send logs to S3 for long-term storage/analytics
+- **Security**: Encryption at rest (KMS), fine-grained IAM controls
+
+#### CloudWatch Logs Insights
+
+- **Purpose**: Interactive log analytics and querying
+- **Query Language**: Powerful SQL-like syntax for filtering, aggregating, and visualizing logs
+- **Use Cases**: Troubleshooting, security analysis, operational monitoring
+- **Limits**: Query up to 20 log groups, 7-day result retention, 15-min query timeout
+
+**Example Query:**
+
+```sql
+fields @timestamp, @message
+| filter @message like /ERROR/
+| sort @timestamp desc
+| limit 20
+```
+
+---
+
+### CloudWatch Events / EventBridge
+
+- **CloudWatch Events**: Delivers a near real-time stream of system events describing changes in AWS resources.
+- **EventBridge**: Next-gen event bus, supports AWS, SaaS, and custom events.
+- **Rules**: Match events and route to targets (Lambda, SNS, SQS, Step Functions, etc.)
+- **Scheduled Events**: Cron-like scheduling for automation
+- **Use Cases**: Automation, decoupling, cross-service orchestration, SaaS integration
+
+**Example: Scheduled Lambda Trigger**
+
+```json
+{
+  "source": ["aws.events"],
+  "detail-type": ["Scheduled Event"]
+}
+```
+
+---
+
+### CloudWatch Dashboards
+
+- **Purpose**: Visualize metrics and logs in customizable, shareable dashboards
+- **Widgets**: Graphs, numbers, text, alarms, logs, custom queries
+- **Cross-Region**: Can display metrics from multiple regions
+- **Sharing**: Share dashboards with teams or externally (read-only)
+- **Use Cases**: NOC, executive reporting, troubleshooting
+
+---
+
+### CloudWatch Agent & Integrations
+
+- **CloudWatch Agent**: Collects system-level metrics and logs from EC2, on-prem servers, and VMs
+- **Unified Agent**: Replaces older SSM and CloudWatch Logs agents
+- **Custom Metrics/Logs**: Send application-specific data
+- **Integration**: ECS, EKS, Lambda, hybrid/on-prem, third-party
+
+**Agent Install Example (Linux):**
+
+```bash
+sudo yum install amazon-cloudwatch-agent
+sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-config-wizard
+sudo systemctl start amazon-cloudwatch-agent
+```
+
+---
+
+### Pricing & Best Practices
+
+- **Pricing**: Based on metrics (standard/custom), logs ingested/retained, dashboards, alarms, and API requests
+- **Cost Optimization**:
+  - Use metric filters and log retention policies
+  - Aggregate custom metrics where possible
+  - Export infrequently accessed logs to S3
+- **Security**:
+  - Use IAM roles and policies for least-privilege access
+  - Enable encryption for logs and metrics
+- **Monitoring Strategy**:
+  - Centralize monitoring for multi-account/multi-region
+  - Use composite alarms for complex scenarios
+  - Integrate with CloudTrail for audit and security
+
+---
+
+### Common Scenarios & Exam Tips
+
+- **Auto Scaling**: Use alarms to trigger scaling policies
+- **EC2 Recovery**: Alarm on instance status check failure to auto-recover
+- **Billing Alerts**: Alarm on EstimatedCharges for cost control
+- **Log Analysis**: Use Logs Insights for troubleshooting and security
+- **Event-Driven Automation**: Use EventBridge for serverless workflows
+- **Dashboards**: Build NOC or executive dashboards for real-time visibility
+
+---
+
+**References:**
+
+- [CloudWatch Documentation](https://docs.aws.amazon.com/cloudwatch/)
+- [CloudWatch Pricing](https://aws.amazon.com/cloudwatch/pricing/)
+- [CloudWatch Logs Insights Query Syntax](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CWL_QuerySyntax.html)
