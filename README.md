@@ -1757,6 +1757,65 @@ resource "aws_instance" "example" {
 
 This configuration will provision a t2.micro EC2 instance in AWS using Terraform.
 
+### Terraform Workflow: `init`, `plan`, and `apply`
+
+#### `terraform init`
+
+- **Purpose:** Initializes a Terraform working directory.
+- **What it does:**
+  - Downloads and installs the provider plugins required by your configuration (e.g., AWS, Azure, GCP).
+  - Sets up the backend for storing state (local or remote).
+  - Prepares the directory for further Terraform commands.
+- **When to use:** Run this command first, and any time you add or change providers or modules.
+- **Example:**
+  ```bash
+  terraform init
+  ```
+
+#### `terraform plan`
+
+- **Purpose:** Creates an execution plan, showing what actions Terraform will take to achieve the desired state.
+- **What it does:**
+  - Compares your configuration files to the current state (real infrastructure or state file).
+  - Shows which resources will be created, changed, or destroyed.
+  - Does not make any changes—safe to run as often as you like.
+- **When to use:** Before every `terraform apply`, to review and confirm changes.
+- **Example:**
+  ```bash
+  terraform plan
+  ```
+- **Debugging Tip:**
+  - You can set the environment variable `TF_LOG=DEBUG` to get detailed debug output for troubleshooting.
+  - Example:
+    ```bash
+    TF_LOG=DEBUG terraform plan
+    ```
+
+#### `terraform apply`
+
+- **Purpose:** Applies the changes required to reach the desired state of the configuration.
+- **What it does:**
+  - Executes the actions proposed in the most recent `terraform plan`.
+  - Prompts for approval before making changes (unless run with `-auto-approve`).
+- **When to use:** After reviewing the plan and confirming you want to make the changes.
+- **Example:**
+  ```bash
+  terraform apply
+  ```
+
+---
+
+| Command           | Purpose                                    | Typical Usage                            |
+| ----------------- | ------------------------------------------ | ---------------------------------------- |
+| `terraform init`  | Initialize working directory and providers | First run, after provider/module changes |
+| `terraform plan`  | Preview changes before applying            | Before every `apply`                     |
+| `terraform apply` | Make actual changes to infrastructure      | After reviewing plan                     |
+
+**Debugging:**
+
+- Use `TF_LOG=DEBUG` with any Terraform command to get verbose logs for troubleshooting.
+  - Make sure you don't separate the commands with `;` or `&&` (example: `TF_LOG=DEBUG terraform plan`)
+
 ## AWS CloudWatch
 
 Amazon CloudWatch is AWS's native monitoring and observability service. It collects, visualizes, and acts on metrics, logs, and events from AWS resources, applications, and on-premises servers, enabling you to monitor performance, troubleshoot issues, and automate responses.
