@@ -1816,6 +1816,36 @@ This configuration will provision a t2.micro EC2 instance in AWS using Terraform
 - Use `TF_LOG=DEBUG` with any Terraform command to get verbose logs for troubleshooting.
   - Make sure you don't separate the commands with `;` or `&&` (example: `TF_LOG=DEBUG terraform plan`)
 
+## OpenTofu
+
+- **OpenTofu** is an open-source, community-driven fork of Terraform, created in response to HashiCorp's change of Terraform's license from open source (MPL) to the Business Source License (BSL) in August 2023.
+- **Goal:** To provide a truly open, vendor-neutral, and community-governed alternative to Terraform, ensuring the ecosystem remains open and collaborative.
+
+### Key Points
+
+- **Origin:** Forked from Terraform 1.5.x before the license change.
+- **License:** Uses the Mozilla Public License (MPL) 2.0, ensuring it remains open source.
+- **Compatibility:** Aims for drop-in compatibility with existing Terraform configurations, providers, and modules.
+- **Community:** Governed by the Linux Foundation and supported by a broad coalition of cloud vendors, infrastructure companies, and the open source community.
+- **CLI:** The command-line interface is nearly identical to Terraform (`opentofu init`, `opentofu plan`, `opentofu apply`, etc.).
+- **Ecosystem:** Supports the same HCL language, state files, and provider ecosystem as Terraform.
+- **Migration:** Most users can switch by replacing `terraform` with `opentofu` in their workflows.
+
+### Why Use OpenTofu?
+
+- **Open Governance:** No single vendor control; decisions are made by the community.
+- **Future-Proof:** Ensures continued open source development and innovation.
+- **Compatibility:** Minimal friction for teams already using Terraform.
+- **Trust:** Transparent development and licensing.
+
+### Example Usage
+
+```bash
+opentofu init
+opentofu plan
+opentofu apply
+```
+
 ## AWS CloudWatch
 
 Amazon CloudWatch is AWS's native monitoring and observability service. It collects, visualizes, and acts on metrics, logs, and events from AWS resources, applications, and on-premises servers, enabling you to monitor performance, troubleshoot issues, and automate responses.
