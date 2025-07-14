@@ -369,117 +369,117 @@ aws iam create-login-profile --user-name myuser --password MyPassword123!
  
 ```json
 {
-	"Version": "2012-10-17",
-	"Statement": [
-		{
-			"Effect": "Allow",
-			"Action": [
-				"iam:CreateRole",
-				"iam:DeleteRole",
-				"iam:GetRole",
-				"iam:PutRolePolicy",
-				"iam:DeleteRolePolicy",
-				"iam:AttachRolePolicy",
-				"iam:DetachRolePolicy",
-				"iam:PassRole",
-				"iam:CreateInstanceProfile",
-				"iam:DeleteInstanceProfile",
-				"iam:GetInstanceProfile",
-				"iam:AddRoleToInstanceProfile",
-				"iam:RemoveRoleFromInstanceProfile",
-				"iam:CreatePolicy",
-				"iam:DeletePolicy",
-				"iam:GetPolicy",
-				"iam:CreatePolicyVersion",
-				"iam:DeletePolicyVersion",
-				"iam:GetPolicyVersion",
-				"iam:ListPolicyVersions",
-				"iam:ListAttachedRolePolicies",
-				"iam:ListRolePolicies",
-				"iam:ListRoles",
-				"iam:ListInstanceProfiles",
-				"iam:ListPolicies",
-				"iam:TagRole",
-				"iam:UntagRole",
-				"iam:TagPolicy",
-				"iam:UntagPolicy",
-				"iam:TagInstanceProfile",
-				"iam:UntagInstanceProfile",
-				"iam:GetRolePolicy",
-				"iam:ListRolePolicies",
-				"iam:ListInstanceProfilesForRole"
-			],
-			"Resource": [
-				"arn:aws:iam::*:role/aws-bioinfo-sandbox-*",
-				"arn:aws:iam::*:instance-profile/aws-bioinfo-sandbox-*",
-				"arn:aws:iam::*:policy/aws-bioinfo-sandbox-*"
-			]
-		},
-		{
-			"Effect": "Allow",
-			"Action": [
-				"logs:CreateLogGroup",
-				"logs:DeleteLogGroup",
-				"logs:DescribeLogGroups",
-				"logs:PutRetentionPolicy",
-				"logs:DeleteRetentionPolicy",
-				"logs:CreateLogStream",
-				"logs:DeleteLogStream",
-				"logs:DescribeLogStreams",
-				"logs:PutLogEvents",
-				"logs:GetLogEvents",
-				"logs:FilterLogEvents",
-				"logs:TagResource",
-				"logs:UntagResource",
-				"logs:ListTagsForResource"
-			],
-			"Resource": [
-				"arn:aws:logs:*:*:log-group:/aws/ec2/aws-bioinfo-sandbox-*",
-				"arn:aws:logs:*:*:log-group:/aws/lambda/aws-bioinfo-sandbox-*",
-				"arn:aws:logs:*:*:log-group:*"
-			]
-		},
-		{
-			"Effect": "Allow",
-			"Action": [
-				"logs:DescribeLogGroups"
-			],
-			"Resource": "*"
-		},
-		{
-			"Effect": "Allow",
-			"Action": [
-				"ec2:*"
-			],
-			"Resource": "*"
-		},
-		{
-			"Effect": "Allow",
-			"Action": [
-				"s3:*"
-			],
-			"Resource": [
-				"arn:aws:s3:::aws-bioinfo-sandbox-*",
-				"arn:aws:s3:::aws-bioinfo-sandbox-*/*"
-			]
-		},
-		{
-			"Effect": "Allow",
-			"Action": [
-				"lambda:*"
-			],
-			"Resource": [
-				"arn:aws:lambda:*:*:function:aws-bioinfo-sandbox-*"
-			]
-		},
-		{
-			"Effect": "Allow",
-			"Action": [
-				"cloudwatch:*"
-			],
-			"Resource": "*"
-		}
-	]
+  "Version":"2012-10-17",
+  "Statement":[
+    {
+      "Effect":"Allow",
+      "Action":[
+        "iam:CreateRole",
+        "iam:DeleteRole",
+        "iam:GetRole",
+        "iam:PutRolePolicy",
+        "iam:DeleteRolePolicy",
+        "iam:AttachRolePolicy",
+        "iam:DetachRolePolicy",
+        "iam:PassRole",
+        "iam:CreateInstanceProfile",
+        "iam:DeleteInstanceProfile",
+        "iam:GetInstanceProfile",
+        "iam:AddRoleToInstanceProfile",
+        "iam:RemoveRoleFromInstanceProfile",
+        "iam:CreatePolicy",
+        "iam:DeletePolicy",
+        "iam:GetPolicy",
+        "iam:CreatePolicyVersion",
+        "iam:DeletePolicyVersion",
+        "iam:GetPolicyVersion",
+        "iam:ListPolicyVersions",
+        "iam:ListAttachedRolePolicies",
+        "iam:ListRolePolicies",
+        "iam:ListRoles",
+        "iam:ListInstanceProfiles",
+        "iam:ListPolicies",
+        "iam:TagRole",
+        "iam:UntagRole",
+        "iam:TagPolicy",
+        "iam:UntagPolicy",
+        "iam:TagInstanceProfile",
+        "iam:UntagInstanceProfile",
+        "iam:GetRolePolicy",
+        "iam:ListRolePolicies",
+        "iam:ListInstanceProfilesForRole"
+      ],
+      "Resource":[
+        "arn:aws:iam::*:role/aws-bioinfo-sandbox-*",
+        "arn:aws:iam::*:instance-profile/aws-bioinfo-sandbox-*",
+        "arn:aws:iam::*:policy/aws-bioinfo-sandbox-*"
+      ]
+    },
+    {
+      "Effect":"Allow",
+      "Action":[
+        "logs:CreateLogGroup",
+        "logs:DeleteLogGroup",
+        "logs:DescribeLogGroups",
+        "logs:PutRetentionPolicy",
+        "logs:DeleteRetentionPolicy",
+        "logs:CreateLogStream",
+        "logs:DeleteLogStream",
+        "logs:DescribeLogStreams",
+        "logs:PutLogEvents",
+        "logs:GetLogEvents",
+        "logs:FilterLogEvents",
+        "logs:TagResource",
+        "logs:UntagResource",
+        "logs:ListTagsForResource"
+      ],
+      "Resource":[
+        "arn:aws:logs:*:*:log-group:/aws/ec2/aws-bioinfo-sandbox-*",
+        "arn:aws:logs:*:*:log-group:/aws/lambda/aws-bioinfo-sandbox-*",
+        "arn:aws:logs:*:*:log-group:*"
+      ]
+    },
+    {
+      "Effect":"Allow",
+      "Action":[
+        "logs:DescribeLogGroups"
+      ],
+      "Resource":"*"
+    },
+    {
+      "Effect":"Allow",
+      "Action":[
+        "ec2:*"
+      ],
+      "Resource":"*"
+    },
+    {
+      "Effect":"Allow",
+      "Action":[
+        "s3:*"
+      ],
+      "Resource":[
+        "arn:aws:s3:::aws-bioinfo-sandbox-*",
+        "arn:aws:s3:::aws-bioinfo-sandbox-*/*"
+      ]
+    },
+    {
+      "Effect":"Allow",
+      "Action":[
+        "lambda:*"
+      ],
+      "Resource":[
+        "arn:aws:lambda:*:*:function:aws-bioinfo-sandbox-*"
+      ]
+    },
+    {
+      "Effect":"Allow",
+      "Action":[
+        "cloudwatch:*"
+      ],
+      "Resource":"*"
+    }
+  ]
 }
 ``` 
 
